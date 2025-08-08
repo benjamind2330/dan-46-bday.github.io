@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metallica Minecraft Runner - Dan's 46th Birthday Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <audio id="backgroundMusic" loop>
+        <source src="background_music.mp4" type="audio/mp4">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <div id="gameContainer">
+        <canvas id="gameCanvas" width="800" height="400"></canvas>
+        <div id="gameUI">
+            <div id="score">Score: <span id="scoreValue">0</span></div>
+            <div id="instructions">Press SPACE to jump, ARROW KEYS to move</div>
+        </div>
+        <div id="gameOverScreen" class="hidden">
+            <h2>GAME OVER</h2>
+            <p>Final Score: <span id="finalScore">0</span></p>
+            <button id="restartBtn">RESTART</button>
+        </div>
+        <div id="startScreen">
+            <h1>METALLICA MINECRAFT RUNNER</h1>
+            <h2>Happy 46th Birthday Dan!</h2>
+            <button id="startBtn">START GAME</button>
+            <div class="instructions">
+                <p>🎸 Collect guitars and musical notes for points</p>
+                <p>🧨 Avoid creepers, TNT, and lava pits</p>
+                <p>⬆️ SPACE to jump</p>
+                <p>⬅️➡️ Arrow keys to move</p>
+            </div>
+        </div>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>

@@ -122,6 +122,27 @@ body {
     margin-bottom: 30px;
 }
 
+#finalMessage {
+    margin: 20px 0;
+    text-align: center;
+    font-style: italic;
+    color: #ffff00;
+    font-size: 16px;
+    line-height: 1.4;
+}
+
+#finalMessage p {
+    font-size: 16px;
+    color: #ffff00;
+    margin: 5px 0;
+}
+
+#finalMessage strong {
+    color: #ff6b00;
+    font-style: normal;
+    font-size: 18px;
+}
+
 .hidden {
     display: none !important;
 }

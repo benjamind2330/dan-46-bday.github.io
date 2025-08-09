@@ -19,10 +19,12 @@ class MetallicaMinecraftRunner {
         this.obstacles = [];
         this.collectibles = [];
         this.score = 0;
-        this.gameSpeed = 1;
-        this.baseSpeed = 1;
+        this.gameSpeed = 1.5;
+        this.baseSpeed = 1.5;
         this.lastObstacleTime = 0;
         this.lastCollectibleTime = 0;
+        this.deathCount = 0;
+        this.baseObstacleSpacing = 4000;
         
         this.keys = {};
         this.setupEventListeners();
@@ -66,8 +68,8 @@ class MetallicaMinecraftRunner {
     restartGame() {
         this.gameState = 'playing';
         this.score = 0;
-        this.gameSpeed = 1;
-        this.baseSpeed = 1;
+        this.gameSpeed = 1.5;
+        this.baseSpeed = 1.5;
         this.obstacles = [];
         this.collectibles = [];
         this.player.x = 100;
@@ -129,7 +131,9 @@ class MetallicaMinecraftRunner {
     
     spawnObstacle() {
         const now = Date.now();
-        if (now - this.lastObstacleTime > 2000 - (this.gameSpeed * 100)) {
+        const spacingMultiplier = 1 + (this.deathCount * 0.1);
+        const adjustedSpacing = (this.baseObstacleSpacing * spacingMultiplier) / this.gameSpeed;
+        if (now - this.lastObstacleTime > adjustedSpacing) {
             const types = ['creeper', 'tnt', 'lava'];
             const type = types[Math.floor(Math.random() * types.length)];
             
@@ -210,12 +214,22 @@ class MetallicaMinecraftRunner {
     
     gameOver() {
         this.gameState = 'gameOver';
+        this.deathCount++;
         document.getElementById('finalScore').textContent = this.score;
+        
+        if (this.score >= 1000) {
+            document.getElementById('finalMessage').classList.add('hidden');
+            document.getElementById('birthdayGift').classList.remove('hidden');
+        } else {
+            document.getElementById('finalMessage').classList.remove('hidden');
+            document.getElementById('birthdayGift').classList.add('hidden');
+        }
+        
         document.getElementById('gameOverScreen').classList.remove('hidden');
     }
     
     updateGameSpeed() {
-        const speedLevel = Math.floor(this.score / 1000);
+        const speedLevel = Math.floor(this.score / 300);
         this.gameSpeed = this.baseSpeed * Math.pow(1.5, speedLevel);
         this.updateSpeedBar();
     }

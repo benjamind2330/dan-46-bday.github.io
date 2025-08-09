@@ -83,7 +83,7 @@ body {
 #speedBarFill {
     height: 100%;
     background: linear-gradient(90deg, #00ff00, #ffff00, #ff6b00, #ff0000);
-    width: 12.5%;
+    width: 18.75%;
     transition: width 0.3s ease;
 }
 
@@ -208,6 +208,19 @@ body {
     color: #ff6b00;
     font-style: normal;
     font-size: 18px;
+}
+
+#birthdayGift {
+    margin: 20px 0;
+    text-align: center;
+}
+
+#giftImage {
+    max-width: 300px;
+    max-height: 200px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
+    border: 2px solid #ff6b00;
 }
 
 .hidden {

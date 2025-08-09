@@ -4,6 +4,7 @@ class MetallicaMinecraftRunner {
         this.ctx = this.canvas.getContext('2d');
         this.gameState = 'start';
         this.backgroundMusic = document.getElementById('backgroundMusic');
+        this.isMuted = false;
         
         this.player = {
             x: 100,
@@ -18,7 +19,8 @@ class MetallicaMinecraftRunner {
         this.obstacles = [];
         this.collectibles = [];
         this.score = 0;
-        this.gameSpeed = 2;
+        this.gameSpeed = 1;
+        this.baseSpeed = 1;
         this.lastObstacleTime = 0;
         this.lastCollectibleTime = 0;
         
@@ -47,18 +49,25 @@ class MetallicaMinecraftRunner {
         document.getElementById('restartBtn').addEventListener('click', () => {
             this.restartGame();
         });
+        
+        document.getElementById('muteBtn').addEventListener('click', () => {
+            this.toggleMute();
+        });
     }
     
     startGame() {
         this.gameState = 'playing';
         document.getElementById('startScreen').classList.add('hidden');
-        this.backgroundMusic.play().catch(e => console.log('Audio play failed:', e));
+        if (!this.isMuted) {
+            this.backgroundMusic.play().catch(e => console.log('Audio play failed:', e));
+        }
     }
     
     restartGame() {
         this.gameState = 'playing';
         this.score = 0;
-        this.gameSpeed = 2;
+        this.gameSpeed = 1;
+        this.baseSpeed = 1;
         this.obstacles = [];
         this.collectibles = [];
         this.player.x = 100;
@@ -67,7 +76,27 @@ class MetallicaMinecraftRunner {
         this.player.grounded = true;
         document.getElementById('gameOverScreen').classList.add('hidden');
         document.getElementById('scoreValue').textContent = '0';
-        this.backgroundMusic.play().catch(e => console.log('Audio play failed:', e));
+        this.updateSpeedBar();
+        if (!this.isMuted) {
+            this.backgroundMusic.play().catch(e => console.log('Audio play failed:', e));
+        }
+    }
+    
+    toggleMute() {
+        this.isMuted = !this.isMuted;
+        const muteBtn = document.getElementById('muteBtn');
+        
+        if (this.isMuted) {
+            this.backgroundMusic.pause();
+            muteBtn.textContent = '🔇';
+            muteBtn.title = 'Unmute Music';
+        } else {
+            if (this.gameState === 'playing') {
+                this.backgroundMusic.play().catch(e => console.log('Audio play failed:', e));
+            }
+            muteBtn.textContent = '🔊';
+            muteBtn.title = 'Mute Music';
+        }
     }
     
     jump() {
@@ -186,9 +215,17 @@ class MetallicaMinecraftRunner {
     }
     
     updateGameSpeed() {
-        if (this.score > 0 && this.score % 500 === 0) {
-            this.gameSpeed += 0.1;
-        }
+        const speedLevel = Math.floor(this.score / 1000);
+        this.gameSpeed = this.baseSpeed * Math.pow(1.5, speedLevel);
+        this.updateSpeedBar();
+    }
+    
+    updateSpeedBar() {
+        const maxSpeed = 8;
+        const speedPercent = Math.min((this.gameSpeed / maxSpeed) * 100, 100);
+        
+        document.getElementById('speedBarFill').style.width = speedPercent + '%';
+        document.getElementById('speedValue').textContent = this.gameSpeed.toFixed(1) + 'x';
     }
     
     drawPlayer() {

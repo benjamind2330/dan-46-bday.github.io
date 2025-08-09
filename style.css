@@ -35,7 +35,11 @@ body {
     position: absolute;
     top: 10px;
     left: 10px;
+    width: calc(100% - 20px);
     z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
 }
 
 #score {
@@ -49,6 +53,69 @@ body {
     font-size: 12px;
     color: #ccc;
     margin-top: 5px;
+}
+
+#speedBar {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+}
+
+#speedLabel {
+    font-size: 14px;
+    font-weight: 700;
+    color: #ff6b00;
+    text-shadow: 2px 2px 4px #000;
+    margin-bottom: 2px;
+}
+
+#speedBarContainer {
+    width: 120px;
+    height: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid #ff6b00;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 2px;
+}
+
+#speedBarFill {
+    height: 100%;
+    background: linear-gradient(90deg, #00ff00, #ffff00, #ff6b00, #ff0000);
+    width: 12.5%;
+    transition: width 0.3s ease;
+}
+
+#speedValue {
+    font-size: 12px;
+    color: #ccc;
+    font-weight: 600;
+}
+
+#muteBtn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid #ff6b00;
+    color: #fff;
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease;
+    z-index: 15;
+}
+
+#muteBtn:hover {
+    background: rgba(255, 107, 0, 0.2);
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(255, 107, 0, 0.5);
 }
 
 #startScreen, #gameOverScreen {
